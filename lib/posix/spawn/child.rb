@@ -182,16 +182,6 @@ module POSIX
         @out, @err = '', ''
         offset = 0
 
-        # force all string and IO encodings to BINARY under 1.9 for now
-        if @out.respond_to?(:force_encoding) and stdin.respond_to?(:set_encoding)
-          [stdin, stdout, stderr].each do |fd|
-            fd.set_encoding('BINARY', 'BINARY')
-          end
-          @out.force_encoding('BINARY')
-          @err.force_encoding('BINARY')
-          input = input.dup.force_encoding('BINARY') if input
-        end
-
         timeout = nil if timeout && timeout <= 0.0
         @runtime = 0.0
         start = Time.now
