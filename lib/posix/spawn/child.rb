@@ -220,7 +220,7 @@ module POSIX
           ready[0].each do |fd|
             buf = (fd == stdout) ? @out : @err
             begin
-              buf << fd.readpartial(BUFSIZE)
+              buf << fd.readpartial(BUFSIZE).force_encoding(Encoding.default_external)
             rescue Errno::EAGAIN, Errno::EINTR
             rescue EOFError
               readers.delete(fd)
